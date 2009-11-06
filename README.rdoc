@@ -1,0 +1,44 @@
+= Prerequisites to Installing
+
+<tt>engines</tt> - Because this is an Engine:
+
+  $ script/plugin install engines
+  
+  Add this to <tt>environment.rb</tt> under the line which requires 'boot' to turn on engines.
+  
+  require File.join(File.dirname(__FILE__), '../vendor/plugins/engines/boot')
+
+= Installation
+
+Install as a plugin for your Rails project:
+
+  $ script/plugin install git://github.com/ienders/simple_redirects.git
+
+Add this routing (generally should be the last line in your routing file):
+
+  map.connect '*path', :controller => 'application', :action => 'rescue_404'   unless ::ActionController::Base.consider_all_requests_local
+
+This can obviously be slightly different (you could remove the unless).  The key here is that your catchall route goes to ApplicationController#rescue_404
+
+Include RedirectHelper in your ApplicationController
+
+  class ApplicationController < ActionController::Base
+    include RedirectHelper
+    ...
+  end
+
+Generate your simple_redirects migrations:
+
+  $ script/generate plugin_migration simple_redirects
+
+Generate redirects as needed with
+
+  $ script/generate redirect /old_bad_search http://www.google.com /old_url_2 /new_url_2
+
+Migrate as usual:
+   
+  $ rake db:migrate
+  
+= Credits
+
+Written primarily by robtierney, pluginized by ienders.

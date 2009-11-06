@@ -1,0 +1,13 @@
+Description:
+  The redirection generator creates redirects from one url to another
+  (provided the from URL doesn't map to an existing route in your app already).
+
+Example:
+  script/generate redirect <from_url> <to_url>
+
+  This will generate:
+
+    RAILS_ROOT
+      |- db
+          |-migrate
+              |- xxx_create_migration_from_url.rb

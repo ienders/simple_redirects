@@ -1,0 +1,13 @@
+class <%= class_name %> < ActiveRecord::Migration
+  def self.up
+    <%- redirects.each do |redirect| -%>
+    execute "INSERT INTO redirections (url_from, url_to) VALUES ('<%= redirect[:from] %>','<%= redirect[:to] %>')"
+    <%- end -%>
+  end
+
+  def self.down
+    <%- redirects.reverse.each do |redirect| -%>
+    execute "DELETE FROM redirections WHERE url_from = '<%= redirect[:from] %>'"
+    <%- end -%>
+  end
+end
